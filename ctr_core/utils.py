@@ -3,6 +3,7 @@ from flask import request, abort
 import random
 import string
 import re
+from random import randint
 
 
 def generate_timestamp():
@@ -21,6 +22,19 @@ def generate_unique_key(key: str):
     t = str(datetime.now().timestamp()).split(".")
     ts = t[0] + t[1]
     return key[:24] + ts
+
+
+def generate_16_digit(prefix: str):
+    for i in range(12):
+        prefix = prefix + str(randint(0, 9))
+    return prefix
+
+
+def generate_4_digit():
+    num = ""
+    for i in range(4):
+        num = num + str(randint(0, 9))
+    return num
 
 
 def validate_request(required_params, expected_params, to_be_checked):
