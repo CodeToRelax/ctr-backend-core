@@ -4,6 +4,7 @@ import random
 import string
 import re
 from random import randint
+from cerberus import Validator
 
 
 def generate_timestamp():
@@ -48,6 +49,15 @@ def validate_request(required_params, expected_params, to_be_checked):
         if to_be_checked[key] is None or to_be_checked[key] == "":
             abort(400, "One or more required param is empty")
     return None
+
+
+def validate_request_schema(schema, json_object):
+    validator = Validator(schema)
+    if not request.json:
+        abort(400, "Request should be in JSON format")
+    if not validator.validate(json_object):
+        abort(400, str(validator.errors))
+    return True
 
 
 def lower_object(obj, keys: list):
