@@ -3,10 +3,10 @@ from botocore.exceptions import ClientError
 from botocore.client import Config
 import base64
 
-s3 = boto3.client('s3', config=Config(s3={'addressing_style': 'path'}), region_name='us-east-2')
+s3 = boto3.client('s3', config=Config(s3={'addressing_style': 'path'}), region_name='eu-west-3')
 
 
-def upload_image(key: str, base64_string: str, bucket: str, aws_region: str = "us-east-2"):
+def upload_image(key: str, base64_string: str, bucket: str, aws_region: str = "eu-west-3"):
     s3 = boto3.client('s3', region_name=aws_region)
     new_image = base64.b64decode(base64_string)
     try:
@@ -31,7 +31,7 @@ def get_pre_singed_url(bucket_name: str, object_name: str, expiration=600):
         return str(e.response['Error']['Message'])
 
 
-def delete_object(key: str, bucket: str, aws_region: str = "us-east-2"):
+def delete_object(key: str, bucket: str, aws_region: str = "eu-west-3"):
     s3 = boto3.client('s3', region_name=aws_region)
     try:
         return s3.delete_object(
