@@ -14,7 +14,10 @@ def create_thumbnail(base64_string: str, filename: str, size: tuple):
         img = Image.open(f"/tmp/{filename}")
         buffer = BytesIO()
         img.thumbnail(size)
-        img.save(buffer, format="JPEG")
+        try:
+            img.save(buffer, format="JPEG")
+        except OSError:
+            img.save(buffer, format="PNG")
         myimage = buffer.getvalue()
         return base64.b64encode(myimage).decode("utf-8")
     except IOError:
@@ -24,5 +27,8 @@ def create_thumbnail(base64_string: str, filename: str, size: tuple):
 def optimize_image(base64_string: str, quality: int=20):
     buffer = BytesIO()
     image = Image.open(BytesIO(base64.b64decode(base64_string)))
-    image.save(buffer, format="JPEG", quality=quality, optimize=True)
+    try:
+        image.save(buffer, format="JPEG", quality=quality, optimize=True)
+    except OSError:
+        image.save(buffer, format="PNG", quality=quality, optimize=True)
     return base64.b64encode(buffer.getvalue()).decode("utf-8")
