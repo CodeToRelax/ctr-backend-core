@@ -22,7 +22,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 setup(
     name='ctr-core',
     version=__version__,
-    description='Core Python library for Avblox services',
+    description='Core Python library for CtR services',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/CodeToRelax/ctr-backend-core',
