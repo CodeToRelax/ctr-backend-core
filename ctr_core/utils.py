@@ -11,6 +11,11 @@ def generate_timestamp():
     return datetime.utcnow().isoformat()
 
 
+def generate_local_timestamp():
+    return datetime.utcfromtimestamp(datetime.now().timestamp() + 7200). \
+                strftime('%Y-%m-%d %H:%M:%S')
+
+
 def generate_expiry_date(year: int):
     return datetime.now() + timedelta(days=year * 365)
 
