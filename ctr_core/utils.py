@@ -57,6 +57,8 @@ def validate_request(required_params, expected_params, to_be_checked):
 
 
 def validate_request_schema(schema, json_object):
+    if isinstance(json_object, list):
+        abort(400, "Invalid list type supplied. Schema must be an object")
     validator = Validator(schema)
     if not request.json:
         abort(400, "Request should be in JSON format")
@@ -73,5 +75,3 @@ def lower_object(obj, keys: list):
 
 def is_base64_encoded(s):
     return re.search("^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$", s)
-
-
